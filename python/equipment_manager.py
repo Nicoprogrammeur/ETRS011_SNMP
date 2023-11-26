@@ -89,6 +89,31 @@ class EquipmentManager:
         self.equipment_list.append(new_equipment)
         self.save_equipment_list()
 
+    def new_equip_data_vierge(self, nom, adresse_ip):
+        for equipement in self.equipment_list:
+            if equipement['Nom'] == nom and equipement['AdresseIP'] == adresse_ip:
+                print(f"L'équipement '{nom}' avec l'adresse IP '{adresse_ip}' existe déjà.")
+                return
+        new_equipment = {
+            'Nom': nom,
+            'AdresseIP': adresse_ip,
+            'OID': {
+                "ipAdEntAddr": "valeurOID1",
+                "sysName": "valeurOID2",
+                "sysContact": "valeurOID3",
+                "sysDescr": "valeurOID4",
+                "sysLocation": "valeurOID5",
+                "sysUpTime": "valeurOID6",
+                "IfHCInOctets": 0,
+                "IfHCOutOctets": 0
+                },
+            "traffic": [
+               {"in": 0, "out": 0}
+            ]
+        }
+        self.equipment_list.append(new_equipment)
+        self.save_equipment_list()
+
     def remove_equipment(self, nom, adresse_ip):
         for equipement in self.equipment_list:
             if equipement['Nom'] == nom and equipement['AdresseIP'] == adresse_ip:

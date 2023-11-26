@@ -141,9 +141,11 @@ def add_equipment():
             msg_add_equipement = "équipement enregistré"
             logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " enregistré")
         else:
+            manager_data.new_equip_data_vierge(nom, adresse_ip)
             msg_add_equipement = "l'équipement est introuvable"
             logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " non trouvé")
     else:
+        manager_data.new_equip_data_vierge(nom, adresse_ip)
         msg_add_equipement = "Le Controlleur est désactivé"
 
     session['msgAddEquipement'] = msg_add_equipement  # Enregistrez le message dans la session
@@ -177,8 +179,10 @@ def add_equipmentv3():
             manager_data.new_equip_data(nom, adresse_ip, OID)
         else:
             msg_add_equipement = "l'équipement est introuvable"
+            manager_data.new_equip_data_vierge(nom, adresse_ip)
     else:
         msg_add_equipement = "Le Controlleur est désactivé"
+        manager_data.new_equip_data_vierge(nom, adresse_ip)
 
     session['msgAddEquipement'] = msg_add_equipement  # Enregistrez le message dans la session
     manager.add_equipment_v3(nom, adresse_ip, username, auth_protocol, auth_password, privacy_protocol, privacy_password)
@@ -259,12 +263,19 @@ def get_equipment_info():
             selected_data = data
             break
 
+    # Récupérer les données de "traffic" depuis votre fichier JSON
+    traffic_data = selected_data['traffic']
+    
+
+    # Créer une liste d'étiquettes (par exemple, les indices des enregistrements)
+    labels = [str(i) for i in range(1, len(traffic_data) + 1)]
+    print(f"{labels}")
+
     if selected_equipment:
         # Affichez les informations de l'équipement (par exemple, dans un modèle séparé)
-        return render_template('equipment_info.html', equipment=selected_equipment, data_equipment=selected_data)
+        return render_template('equipment_info.html', equipment=selected_equipment, data_equipment=selected_data, traffic_labels=labels, traffic_data=traffic_data)
     else:
         return "Équipement introuvable."
-
 
 
 

@@ -1,0 +1,22 @@
+{
+    "equipements": [
+        {
+            "Nom": "Equipement1",
+            "AdresseIP": "192.168.1.10",
+            "OID": {
+                "ipAdEntAddr": "valeurOID1",
+                "sysName": "valeurOID2",
+                "sysContact": "valeurOID3",
+                "sysDescr": "valeurOID4",
+                "sysLocation": "valeurOID5",
+                "sysUpTime": "valeurOID6",
+                "IfHCInOctets": 12345,
+                "IfHCOutOctets": 67890
+            },
+            "traffic": [
+                {"in": 12345, "out": 67890},
+                {"in": 54321, "out": 98760}
+            ]
+        }
+    ]
+}

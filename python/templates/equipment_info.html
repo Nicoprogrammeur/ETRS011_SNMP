@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- ... autres balises d'en-tête ... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -32,6 +34,10 @@
         <p>{{ oid }}: {{ value }}</p>
     {% endfor %}
 
+    <br>
+
+    <canvas id="trafficChart" width="400" height="200"></canvas>
+
 
 </div>
 
@@ -39,6 +45,43 @@
 {% include 'footer.html' %}
 
 <script src="{{ url_for('static', filename='toggle.js') }}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer les données de "traffic" depuis le modèle Flask
+        const labels = {{ traffic_labels | tojson | safe }};
+        const trafficData = {{ traffic_data | tojson | safe }};
+
+        // Créer un objet de contexte pour le canvas
+        const ctx = document.getElementById('trafficChart').getContext('2d');
+
+        // Générer le graphique
+        const trafficChart = new Chart(ctx, {
+            type: 'line',  // Utilisez 'line' pour un graphique de ligne
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Trafic entrant',
+                    data: trafficData.map(entry => entry.in),
+                    borderColor: 'blue',
+                    borderWidth: 2,
+                    fill: false
+                }, {
+                    label: 'Trafic sortant',
+                    data: trafficData.map(entry => entry.out),
+                    borderColor: 'red',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                // Configurations supplémentaires du graphique (si nécessaire)
+            }
+        });
+    });
+</script>
+
+
 
 </body>
 </html>
