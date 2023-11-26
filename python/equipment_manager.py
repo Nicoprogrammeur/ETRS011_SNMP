@@ -64,7 +64,7 @@ class EquipmentManager:
         self.equipment_list.append(new_equipment)
         self.save_equipment_list()
 
-    def new_equip_data(self, nom, adresse_ip, oid):
+    def new_equip_data(self, nom, adresse_ip, oid, time):
         for equipement in self.equipment_list:
             if equipement['Nom'] == nom and equipement['AdresseIP'] == adresse_ip:
                 print(f"L'équipement '{nom}' avec l'adresse IP '{adresse_ip}' existe déjà.")
@@ -83,13 +83,13 @@ class EquipmentManager:
                 "IfHCOutOctets": oid[7]
                 },
             "traffic": [
-               {"in": oid[6], "out": oid[7]}
+               {'timestamp': time, "in": oid[6], "out": oid[7]}
             ]
         }
         self.equipment_list.append(new_equipment)
         self.save_equipment_list()
 
-    def new_equip_data_vierge(self, nom, adresse_ip):
+    def new_equip_data_vierge(self, nom, adresse_ip, time):
         for equipement in self.equipment_list:
             if equipement['Nom'] == nom and equipement['AdresseIP'] == adresse_ip:
                 print(f"L'équipement '{nom}' avec l'adresse IP '{adresse_ip}' existe déjà.")
@@ -108,7 +108,7 @@ class EquipmentManager:
                 "IfHCOutOctets": 0
                 },
             "traffic": [
-               {"in": 0, "out": 0}
+               {'timestamp': time, "in": 0, "out": 0}
             ]
         }
         self.equipment_list.append(new_equipment)
@@ -132,7 +132,7 @@ class EquipmentManager:
                 self.save_equipment_list()
                 return
 
-    def add_data_equip(self, nom, adresse_ip, oid):
+    def add_data_equip(self, nom, adresse_ip, oid, time):
         # Charger le contenu du fichier JSON existant
         with open(self.filename, 'r') as file:
             equipements_data = json.load(file)
@@ -151,6 +151,7 @@ class EquipmentManager:
                 equipement['OID']['IfHCOutOctets'] = oid[7]
 
                 new_data_graph = {
+                    'timestamp': time,
                     'in': oid[6],
                     'out': oid[7]
                 }

@@ -49,15 +49,21 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Récupérer les données de "traffic" depuis le modèle Flask
-        const labels = {{ traffic_labels | tojson | safe }};
-        const trafficData = {{ traffic_data | tojson | safe }};
+        const labels = {{ traffic_labels | tojson | safe  }};
+        const trafficData = {{ traffic_data | tojson | safe  }};
+
+        // Formater les étiquettes pour inclure uniquement l'heure (HH:MM)
+        const formattedLabels = labels.map(label => {
+            const date = new Date(label);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        });
 
         // Créer un objet de contexte pour le canvas
         const ctx = document.getElementById('trafficChart').getContext('2d');
 
         // Générer le graphique
         const trafficChart = new Chart(ctx, {
-            type: 'line',  // Utilisez 'line' pour un graphique de ligne
+            type: 'line',
             data: {
                 labels: labels,
                 datasets: [{

@@ -12,6 +12,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import logging, subprocess
 import schedule
 import time
+import datetime
 
 logging.basicConfig( level=logging.DEBUG, filename='app.log')
 
@@ -54,6 +55,7 @@ def load_users_data():
 @app.route('/collect_snmp_data')
 def collect_snmp_data():
     manager.collect_snmp_data()
+    manager_data.collect_snmp_data()
     equipment_list = manager.get_equipment_list()
 
     if etat_SNMP==True:
@@ -85,7 +87,10 @@ def collect_snmp_data():
                 for i, ligne in enumerate(OID):
                     OID[i] = ligne[:-1]
 
-                manager_data.add_data_equip(nom, adresse_ip, OID)
+                # Ajoutez la date actuelle à chaque enregistrement
+                timestamp = datetime.datetime.now().isoformat()
+
+                manager_data.add_data_equip(nom, adresse_ip, OID, timestamp)
 
 
 # Planifiez la fonction pour s'exécuter toutes les 5 minutes (modifiable selon vos besoins)
@@ -132,20 +137,23 @@ def add_equipment():
         process = subprocess.Popen(commande, shell=True, stdout=subprocess.PIPE)
         sortie = process.stdout.read().decode()
 
+        # Ajoutez la date actuelle à chaque enregistrement
+        timestamp = datetime.datetime.now().isoformat()
+
         if sortie.strip():
             OID = sortie.split('\n')
             for i, ligne in enumerate(OID):
                 OID[i] = ligne[:-1]
 
-            manager_data.new_equip_data(nom, adresse_ip, OID)
+            manager_data.new_equip_data(nom, adresse_ip, OID, timestamp)
             msg_add_equipement = "équipement enregistré"
             logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " enregistré")
         else:
-            manager_data.new_equip_data_vierge(nom, adresse_ip)
+            manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
             msg_add_equipement = "l'équipement est introuvable"
             logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " non trouvé")
     else:
-        manager_data.new_equip_data_vierge(nom, adresse_ip)
+        manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
         msg_add_equipement = "Le Controlleur est désactivé"
 
     session['msgAddEquipement'] = msg_add_equipement  # Enregistrez le message dans la session
@@ -170,17 +178,22 @@ def add_equipmentv3():
         process = subprocess.Popen(commande, shell=True, stdout=subprocess.PIPE)
         sortie = process.stdout.read().decode()
 
+        # Ajoutez la date actuelle à chaque enregistrement
+        timestamp = datetime.datetime.now().isoformat()
+
         if sortie.strip():
             msg_add_equipement = "équipement enregistré"
             OID = sortie.split('\n')
             for i, ligne in enumerate(OID):
                 OID[i] = ligne[:-1]
 
-            manager_data.new_equip_data(nom, adresse_ip, OID)
+            manager_data.new_equip_data(nom, adresse_ip, OID, timestamp)
         else:
+            manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
             msg_add_equipement = "l'équipement est introuvable"
             manager_data.new_equip_data_vierge(nom, adresse_ip)
     else:
+        manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
         msg_add_equipement = "Le Controlleur est désactivé"
         manager_data.new_equip_data_vierge(nom, adresse_ip)
 
@@ -267,9 +280,8 @@ def get_equipment_info():
     traffic_data = selected_data['traffic']
     
 
-    # Créer une liste d'étiquettes (par exemple, les indices des enregistrements)
-    labels = [str(i) for i in range(1, len(traffic_data) + 1)]
-    print(f"{labels}")
+    # Créer une liste d'étiquettes en utilisant les timestamps
+    labels = [entry['timestamp'] for entry in traffic_data]
 
     if selected_equipment:
         # Affichez les informations de l'équipement (par exemple, dans un modèle séparé)
