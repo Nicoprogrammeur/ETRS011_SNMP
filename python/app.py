@@ -36,6 +36,7 @@ logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s 
 
 app = Flask(__name__)
 manager = EquipmentManager('equip.json')
+manager_data = EquipmentManager('equip_data_oid.json')
 users_data = {}
 # Configurez le système de journalisation
 
@@ -84,7 +85,7 @@ def collect_snmp_data():
                 for i, ligne in enumerate(OID):
                     OID[i] = ligne[:-1]
 
-                manager.add_data_equip(nom, adresse_ip, OID)
+                manager_data.add_data_equip(nom, adresse_ip, OID)
 
 
 # Planifiez la fonction pour s'exécuter toutes les 5 minutes (modifiable selon vos besoins)
@@ -112,6 +113,10 @@ def toggle():
     data = request.get_json()
     new_state = data['newState']
     etat_SNMP = new_state
+    if etat_SNMP == True:
+        logging.info("INFO: Controlleur Lancer")
+    else:
+        logging.info("INFO: Controlleur Desactiver")
     return jsonify({"success": True})
 
 @app.route('/add_equipment', methods=['POST'])
@@ -132,10 +137,12 @@ def add_equipment():
             for i, ligne in enumerate(OID):
                 OID[i] = ligne[:-1]
 
-            manager.add_data_equip(nom, adresse_ip, OID)
+            manager_data.new_equip_data(nom, adresse_ip, OID)
             msg_add_equipement = "équipement enregistré"
+            logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " enregistré")
         else:
             msg_add_equipement = "l'équipement est introuvable"
+            logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " non trouvé")
     else:
         msg_add_equipement = "Le Controlleur est désactivé"
 
@@ -167,7 +174,7 @@ def add_equipmentv3():
             for i, ligne in enumerate(OID):
                 OID[i] = ligne[:-1]
 
-            manager.add_data_equip(nom, adresse_ip, OID)
+            manager_data.new_equip_data(nom, adresse_ip, OID)
         else:
             msg_add_equipement = "l'équipement est introuvable"
     else:
@@ -182,6 +189,7 @@ def remove_equipment():
     nom = request.form['nom']
     adresse_ip = request.form['adresse_ip']
     manager.remove_equipment(nom, adresse_ip)
+    manager_data.remove_equipment(nom, adresse_ip)
     return redirect(url_for('liste_equipements'))
 ##     code pour modifier un equipement
 @app.route('/edit_equipment', methods=['POST'])
@@ -238,6 +246,7 @@ def logout():
 def get_equipment_info():
     selected_ip = request.form['selected_equipment']
     selected_equipment = None
+    selected_data = None
 
     # Recherchez l'équipement en fonction de l'adresse IP sélectionnée
     for equipment in manager.get_equipment_list():
@@ -245,9 +254,14 @@ def get_equipment_info():
             selected_equipment = equipment
             break
 
+    for data in manager_data.get_equipment_list():
+        if data['AdresseIP'] == selected_ip:
+            selected_data = data
+            break
+
     if selected_equipment:
         # Affichez les informations de l'équipement (par exemple, dans un modèle séparé)
-        return render_template('equipment_info.html', equipment=selected_equipment)
+        return render_template('equipment_info.html', equipment=selected_equipment, data_equipment=selected_data)
     else:
         return "Équipement introuvable."
 

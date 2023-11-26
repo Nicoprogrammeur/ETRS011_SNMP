@@ -1,0 +1,47 @@
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})
+2023-11-26 18:11:04,548 - Journal_exemple - DEBUG - Information-Debug
+DEBUG:Journal_exemple:Information-Debug
+2023-11-26 18:11:04,568 - Journal_exemple - INFO - Message info
+INFO:Journal_exemple:Message info
+2023-11-26 18:11:04,568 - Journal_exemple - WARNING - avertissement
+WARNING:Journal_exemple:avertissement
+2023-11-26 18:11:04,569 - Journal_exemple - CRITICAL - erreur grave
+CRITICAL:Journal_exemple:erreur grave
+INFO:root:Ceci est un message de journalisation d'information.
+INFO:waitress:Serving on http://0.0.0.0:9000
+INFO:root:L'utilisateur root s'est connecté avec succès.
+DEBUG:schedule:Running job Job(interval=1, unit=minutes, do=collect_snmp_data, args=(), kwargs={})

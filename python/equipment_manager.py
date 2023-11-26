@@ -28,11 +28,6 @@ class EquipmentManager:
         with open(self.filename, 'w') as file:
             json.dump(equipment_info, file, indent=4)
 
-    def save_equipment_list_v3(self):
-        equipment_info = {'equipements': self.equipment_list}
-        with open(self.filename, 'w') as file:
-            json.dump(equipment_info, file, indent=4)
-
 
     def add_equipment(self, nom, adresse_ip, port, community):
         for equipement in self.equipment_list:
@@ -44,15 +39,7 @@ class EquipmentManager:
             'AdresseIP': adresse_ip,
             'SNMP': 'v2c',
             'port': port,
-            'community': community,
-            'OID': {
-                "ipAdEntAddr": "valeurOID1",
-                "sysName": "valeurOID2",
-                "sysContact": "valeurOID3",
-                "sysDescr": "valeurOID4",
-                "sysLocation": "valeurOID5",
-                "sysUpTime": "valeurOID6"
-                }
+            'community': community
             }
         self.equipment_list.append(new_equipment)
         self.save_equipment_list()
@@ -72,18 +59,35 @@ class EquipmentManager:
             'AuthProtocol': auth_protocol,
             'AuthPassword': auth_password,
             'PrivacyProtocol': privacy_protocol,
-            'PrivacyPassword': privacy_password,
-            'OID': {
-                "ipAdEntAddr": "valeurOID1",
-                "sysName": "valeurOID2",
-                "sysContact": "valeurOID3",
-                "sysDescr": "valeurOID4",
-                "sysLocation": "valeurOID5",
-                "sysUpTime": "valeurOID6"
-                }
+            'PrivacyPassword': privacy_password
             }
         self.equipment_list.append(new_equipment)
-        self.save_equipment_list_v3()
+        self.save_equipment_list()
+
+    def new_equip_data(self, nom, adresse_ip, oid):
+        for equipement in self.equipment_list:
+            if equipement['Nom'] == nom and equipement['AdresseIP'] == adresse_ip:
+                print(f"L'équipement '{nom}' avec l'adresse IP '{adresse_ip}' existe déjà.")
+                return
+        new_equipment = {
+            'Nom': nom,
+            'AdresseIP': adresse_ip,
+            'OID': {
+                "ipAdEntAddr": oid[0],
+                "sysName": oid[1],
+                "sysContact": oid[2],
+                "sysDescr": oid[3],
+                "sysLocation": oid[4],
+                "sysUpTime": oid[5],
+                "IfHCInOctets": oid[6],
+                "IfHCOutOctets": oid[7]
+                },
+            "traffic": [
+               {"in": oid[6], "out": oid[7]}
+            ]
+        }
+        self.equipment_list.append(new_equipment)
+        self.save_equipment_list()
 
     def remove_equipment(self, nom, adresse_ip):
         for equipement in self.equipment_list:
@@ -118,6 +122,14 @@ class EquipmentManager:
                 equipement['OID']['sysDescr'] = oid[3]
                 equipement['OID']['sysLocation'] = oid[4]
                 equipement['OID']['sysUpTime'] = oid[5]
+                equipement['OID']['IfHCInOctets'] = oid[6]
+                equipement['OID']['IfHCOutOctets'] = oid[7]
+
+                new_data_graph = {
+                    'in': oid[6],
+                    'out': oid[7]
+                }
+                equipement['traffic'].append(new_data_graph)
 
         # Sauvegarder les modifications dans le fichier JSON
         with open(self.filename, 'w') as file:
