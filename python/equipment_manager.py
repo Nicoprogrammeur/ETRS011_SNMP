@@ -79,11 +79,11 @@ class EquipmentManager:
                 "sysDescr": oid[3],
                 "sysLocation": oid[4],
                 "sysUpTime": oid[5],
-                "IfHCInOctets": oid[6],
-                "IfHCOutOctets": oid[7]
+                "IfHCInOctets": oid[6][2:],
+                "IfHCOutOctets": oid[7][2:]
                 },
             "traffic": [
-               {'timestamp': time, "in": oid[6], "out": oid[7]}
+               {'timestamp': time, "in": oid[6][2:], "out": oid[7][2:]}
             ]
         }
         self.equipment_list.append(new_equipment)
@@ -140,6 +140,9 @@ class EquipmentManager:
         # Modifier les données en mémoire
         for equipement in equipements_data.get('equipements', []):
             if equipement['Nom'] == nom and equipement['AdresseIP'] == adresse_ip:
+                old_oid6 = equipement['OID']['IfHCInOctets']
+                old_oid7 = equipement['OID']['IfHCOutOctets']
+
                 # Ajouter les données que vous recevez, par exemple :
                 equipement['OID']['ipAdEntAddr'] = oid[0]
                 equipement['OID']['sysName'] = oid[1]
@@ -147,13 +150,16 @@ class EquipmentManager:
                 equipement['OID']['sysDescr'] = oid[3]
                 equipement['OID']['sysLocation'] = oid[4]
                 equipement['OID']['sysUpTime'] = oid[5]
-                equipement['OID']['IfHCInOctets'] = oid[6]
-                equipement['OID']['IfHCOutOctets'] = oid[7]
+                equipement['OID']['IfHCInOctets'] = oid[6][2:]
+                equipement['OID']['IfHCOutOctets'] = oid[7][2:]
+
+                new_oid6 = int(oid[6][2:]) - int(old_oid6)
+                new_oid7 = int(oid[7][2:]) - int(old_oid7)
 
                 new_data_graph = {
                     'timestamp': time,
-                    'in': oid[6],
-                    'out': oid[7]
+                    'in': new_oid6,
+                    'out': new_oid7
                 }
                 equipement['traffic'].append(new_data_graph)
 

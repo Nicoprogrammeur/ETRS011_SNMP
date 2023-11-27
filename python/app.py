@@ -54,8 +54,9 @@ def load_users_data():
 # Fonction pour récupérer les données des agents SNMP
 @app.route('/collect_snmp_data')
 def collect_snmp_data():
-    manager.collect_snmp_data()
-    manager_data.collect_snmp_data()
+    #manager.collect_snmp_data()
+    #manager_data.collect_snmp_data()
+    manager_data.__init__('equip_data_oid.json')
     equipment_list = manager.get_equipment_list()
 
     if etat_SNMP==True:
@@ -119,9 +120,9 @@ def toggle():
     new_state = data['newState']
     etat_SNMP = new_state
     if etat_SNMP == True:
-        logging.info("INFO: Controlleur Lancer")
+        logging.info(" Controlleur Lancer")
     else:
-        logging.info("INFO: Controlleur Desactiver")
+        logging.info(" Controlleur Desactiver")
     return jsonify({"success": True})
 
 @app.route('/add_equipment', methods=['POST'])
@@ -147,11 +148,11 @@ def add_equipment():
 
             manager_data.new_equip_data(nom, adresse_ip, OID, timestamp)
             msg_add_equipement = "équipement enregistré"
-            logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " enregistré")
+            logging.info(" Equipement " + nom + " ; " + adresse_ip + " enregistré")
         else:
             manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
             msg_add_equipement = "l'équipement est introuvable"
-            logging.info("INFO: Equipement " + nom + " ; " + adresse_ip + " non trouvé")
+            logging.info(" Equipement " + nom + " ; " + adresse_ip + " non trouvé")
     else:
         manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
         msg_add_equipement = "Le Controlleur est désactivé"

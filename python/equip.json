@@ -6,6 +6,13 @@
             "SNMP": "v2c",
             "port": "161",
             "community": "public"
+        },
+        {
+            "Nom": "test_v2",
+            "AdresseIP": "192.168.140.140",
+            "SNMP": "v2c",
+            "port": "161",
+            "community": "passprojet"
         }
     ]
 }
