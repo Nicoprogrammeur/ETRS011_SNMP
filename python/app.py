@@ -131,14 +131,14 @@ def add_equipment():
     port = request.form['port']
     communaute = request.form['communaute']
 
+    # Ajoutez la date actuelle à chaque enregistrement
+    timestamp = datetime.datetime.now().isoformat()
+
     #----------execution du code pour vérification--------------------------
     if etat_SNMP==True:
         commande = './multi_SNMP_v2c.sh ' + communaute + ' ' + adresse_ip
         process = subprocess.Popen(commande, shell=True, stdout=subprocess.PIPE)
         sortie = process.stdout.read().decode()
-
-        # Ajoutez la date actuelle à chaque enregistrement
-        timestamp = datetime.datetime.now().isoformat()
 
         if sortie.strip():
             OID = sortie.split('\n')
@@ -172,14 +172,14 @@ def add_equipmentv3():
     privacy_protocol = request.form['privacy_protocol']
     privacy_password = request.form['privacy_password']
 
+    # Ajoutez la date actuelle à chaque enregistrement
+    timestamp = datetime.datetime.now().isoformat()
+
     #----------execution du code pour vérification--------------------------
     if etat_SNMP==True:
         commande = './multi_SNMP_v3.sh ' + adresse_ip + ' ' + username + ' ' + auth_protocol + ' ' + auth_password + ' ' + privacy_protocol + ' ' + privacy_password
         process = subprocess.Popen(commande, shell=True, stdout=subprocess.PIPE)
         sortie = process.stdout.read().decode()
-
-        # Ajoutez la date actuelle à chaque enregistrement
-        timestamp = datetime.datetime.now().isoformat()
 
         if sortie.strip():
             msg_add_equipement = "équipement enregistré"
