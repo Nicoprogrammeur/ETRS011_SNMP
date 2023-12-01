@@ -1,15 +1,15 @@
 {
     "equipements": [
         {
-            "Nom": "Equipement1",
+            "Nom": "Equipement Exemple",
             "AdresseIP": "192.168.1.10",
             "OID": {
-                "ipAdEntAddr": "valeurOID1",
-                "sysName": "valeurOID2",
-                "sysContact": "valeurOID3",
-                "sysDescr": "valeurOID4",
-                "sysLocation": "valeurOID5",
-                "sysUpTime": "valeurOID6",
+                "ipAdEntAddr": "Son Adresse IP",
+                "sysName": "Son Nom",
+                "sysContact": "L'adresse de l'admin",
+                "sysDescr": "Une description",
+                "sysLocation": "Une localisation si l'admin l'a indiqué",
+                "sysUpTime": "Depuis quand elle est allumé",
                 "IfHCInOctets": 12345,
                 "IfHCOutOctets": 67890
             },
@@ -28,12 +28,17 @@
                     "timestamp": "2023-11-26T12:10:00",
                     "in": 24986,
                     "out": 37704
+                },
+                {
+                    "timestamp": "2023-11-26T12:15:00",
+                    "in": 100000,
+                    "out": 20000
                 }
             ]
         },
         {
-            "Nom": "test_v2",
-            "AdresseIP": "192.168.140.140",
+            "Nom": "Equipement Contenaire",
+            "AdresseIP": "172.17.0.3",
             "OID": {
                 "ipAdEntAddr": "valeurOID1",
                 "sysName": "valeurOID2",

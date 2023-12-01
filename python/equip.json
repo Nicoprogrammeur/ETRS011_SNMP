@@ -1,18 +1,18 @@
 {
     "equipements": [
         {
-            "Nom": "Equipement1",
+            "Nom": "Equipement Exemple",
             "AdresseIP": "192.168.1.10",
             "SNMP": "v2c",
             "port": "161",
             "community": "public"
         },
         {
-            "Nom": "test_v2",
-            "AdresseIP": "192.168.140.140",
+            "Nom": "Equipement Contenaire",
+            "AdresseIP": "172.17.0.3",
             "SNMP": "v2c",
             "port": "161",
-            "community": "passprojet"
+            "community": "public"
         }
     ]
 }

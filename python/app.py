@@ -192,11 +192,9 @@ def add_equipmentv3():
         else:
             manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
             msg_add_equipement = "l'équipement est introuvable"
-            manager_data.new_equip_data_vierge(nom, adresse_ip)
     else:
         manager_data.new_equip_data_vierge(nom, adresse_ip, timestamp)
         msg_add_equipement = "Le Controlleur est désactivé"
-        manager_data.new_equip_data_vierge(nom, adresse_ip)
 
     session['msgAddEquipement'] = msg_add_equipement  # Enregistrez le message dans la session
     manager.add_equipment_v3(nom, adresse_ip, username, auth_protocol, auth_password, privacy_protocol, privacy_password)
